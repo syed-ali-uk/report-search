@@ -1,18 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
-  <title>Vanilla JavaScript App</title>
-</head>
-
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>TechWebDots SWA Demo</title>
+    </head>
 <body>
-  <main>
-    <h1>Vanilla JavaScript App</h1>
-    <p>Loading messages from API : <b id="name">...</b> </p>
-  </main>
-</body>
+    <main>
+        <h1>TechWebDots SWA Demo</h1>
+        <p>
+            <input type="button" id="btno" value="Load content from the API">
+            <br><br>
+            <b id="name">Placeholder</b>
+        </p>
+    </main>
 
+    <script>
+        if (document.getElementById("name") != null) {
+            document.getElementById("btno").addEventListener("click",
+                function () {
+                    var url = '/api/http_trigger';
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("GET", url, true);
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+                    xhr.onreadystatechange = function () {
+                        //Typical action to be performed when the document is ready:
+                        var x = document.getElementById("name");
+                        if (this.readyState == 4 && this.status == 200) {
+                            x.innerHTML = this.response + "<br><b>API called successfully!</b>";
+                        }
+                        else {
+                            x.innerHTML = "<b>API is offline!</b>";
+                        }
+                        console.log(this.response);
+                    };
+                    xhr.send();
+                },
+                false
+            )
+        }
+    </script>
+</body>
 </html>
